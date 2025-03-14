@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // OPEN INFPUT FILE
+    // OPEN INPUT FILE
     if (!input) {
         printf("Failed to open input file.\n");
         return 1;
