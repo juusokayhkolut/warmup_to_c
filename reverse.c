@@ -105,6 +105,9 @@ int main(int argc, char *argv[]) {
 
     // CLOSE FILE AND FREE MEMORY
     if (output) fclose(output);
+    for (size_t i = 0; i < count; i++) {
+        free(lines[i]);
+    }
     free(lines);
 
     return 0;
