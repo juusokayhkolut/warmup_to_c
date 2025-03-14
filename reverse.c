@@ -31,6 +31,13 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    // CHECK IF TOO MANY ARGUMENTS WAS GIVEN
+    if (argc > 3) {
+        printf("usage: reverse <input> <output>\n");
+        exit(1);
+    }
+    
+
     // CHECK IF INPUT AND OUTPUT (NAME) IS THE SAME
     if (argc >= 3 && strcmp(argv[1], argv[2]) == 0) {
         printf("Input and output file must differ\n");
