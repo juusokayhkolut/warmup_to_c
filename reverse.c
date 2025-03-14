@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     size_t count = 0;
     char **lines = malloc(capacity * sizeof(char *));
     if (!lines) {
-        printf("Memory allocation failed.\n");
+        printf("malloc failed\n");
         fclose(input);
         exit(1);
     }
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
             capacity *= 2; // double the capacity
             char **temp = realloc(lines, capacity * sizeof(char *));
             if (!temp) {
-                printf("Memory reallocation failed.\n");
+                printf("malloc failed\n");
                 free(line);
                 for (size_t i = 0; i < count; i++) free(lines[i]);
                 free(lines);
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     if (argc >= 3) {
         output = fopen(argv[2], "w");
         if (!output) {
-            printf("Failed to open output file.\n");
+            printf("error: cannot open file '%s'.\n", argv[2]);
             fclose(input);
             exit(1);
         }
