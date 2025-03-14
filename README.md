@@ -1,9 +1,9 @@
 # Documentation for reverse program
 
 ## Files
-- reverse.c: Includes main logic for reversing operations
-- tests.c: Includes tests for reverse program
-- Makefile: Responsible for translating c code
+- `reverse.c`: Includes main logic for reversing operations
+- `tests.c`: Includes tests for reverse program
+- `Makefile`: Responsible for translating c code
 
 ### reverse.c
 - `readLine`: reads a single line
@@ -35,11 +35,11 @@ Flags:
 - std=c11: Use C11 standard for compiling the code
 
 #### Commands
-- make all: Compiles reverse (main) and test file
-- make reverse: Compiles reverse (main) file
-- make tests: Compiles test file
-- make test: Runs tests
-- make clean: Removes files
+- `make all`: Compiles reverse (main) and test file
+- `make reverse`: Compiles reverse (main) file
+- `make tests`: Compiles test file
+- `make test`: Runs tests
+- `make clean`: Removes files
 
 ## Running the program
 To turn the program, use
