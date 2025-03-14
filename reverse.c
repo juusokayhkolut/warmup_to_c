@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////
 // FILE WRITTEN BY JUUSO KÄYHKÖ (493675)                          //
 //                                                                //
-// AI TOOLS WERE USED FOR ALGORHITM GENERATION,                   //
+// AI TOOLS WERE USED FOR ALGORHITM STRUCTURE GENERATION,         //
 // BUT NOT FOR WRITING THE ACTUALY CODE.                          //
 ////////////////////////////////////////////////////////////////////
 
