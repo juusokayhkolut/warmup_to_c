@@ -27,20 +27,20 @@ char *readLine(FILE *file) {
 int main(int argc, char *argv[]) {
     // CHECK IF AT LEAST ONE ARGUMENT WAS GIVEN
     if (argc < 2) {
-        printf("Please provide arguments for input file and optionally output file\n");
+        fprintf(stderr, "Provide arguments for input file and optionally output file\n");
         exit(1);
     }
 
     // CHECK IF TOO MANY ARGUMENTS WAS GIVEN
     if (argc > 3) {
-        printf("usage: reverse <input> <output>\n");
+        fprintf(stderr, "usage: reverse <input> <output>\n");
         exit(1);
     }
     
 
     // CHECK IF INPUT AND OUTPUT (NAME) IS THE SAME
     if (argc >= 3 && strcmp(argv[1], argv[2]) == 0) {
-        printf("Input and output file must differ\n");
+        fprintf(stderr, "Input and output file must differ\n");
         exit(1);
     }
 
@@ -51,14 +51,14 @@ int main(int argc, char *argv[]) {
     size_t count = 0;
     char **lines = malloc(capacity * sizeof(char *));
     if (!lines) {
-        printf("malloc failed\n");
+        fprintf(stderr, "malloc failed\n");
         fclose(input);
         exit(1);
     }
 
     // OPEN INPUT FILE
     if (!input) {
-        printf("error: cannot open file '%s'.\n", argv[1]);
+        fprintf(stderr, "error: cannot open file '%s'.\n", argv[1]);
         exit(1);
     }
 
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
             capacity *= 2; // double the capacity
             char **temp = realloc(lines, capacity * sizeof(char *));
             if (!temp) {
-                printf("malloc failed\n");
+                fprintf(stderr, "malloc failed\n");
                 free(line);
                 for (size_t i = 0; i < count; i++) free(lines[i]);
                 free(lines);
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
     if (argc >= 3) {
         output = fopen(argv[2], "w");
         if (!output) {
-            printf("error: cannot open file '%s'.\n", argv[2]);
+            fprintf(stderr, "error: cannot open file '%s'.\n", argv[2]);
             fclose(input);
             exit(1);
         }
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
         if (output) {
             fprintf(output, "%s\n", lines[i]);
         } else {
-            printf("%s\n", lines[i]);
+            fprintf("%s\n", lines[i]);
         }
     }
 
