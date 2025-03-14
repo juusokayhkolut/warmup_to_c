@@ -12,7 +12,10 @@ void writeTestFile(const char *filename, const char *content);
 void readFileAndCompare(const char *filename, const char *expected);
 void deleteFile(const char *filename);
 
-/*************************************************************************/
+void test_noArguments() {
+    int result = system("./reverse");
+    assert(result != 0); // Should not be 0
+}
 
 void test_emptyFile() {
     writeTestFile("empty.txt", "");
@@ -32,10 +35,10 @@ void test_singleLine() {
 
 void test_missingFile() {
     int result = system("./reverse doesnotexist.txt output4.txt > temp.txt 2>&1");
-    assert(result != 0); // Should fail
+    assert(result != 0); // Should not be 0
 
     FILE *fp = fopen("temp.txt", "r");
-    assert(fp != NULL);
+    assert(fp != NULL); // Should not be NULL
     
     char buffer[256];
     fgets(buffer, sizeof(buffer), fp);
@@ -48,10 +51,10 @@ void test_missingFile() {
 void test_invalidOutputFile() {
     writeTestFile("test5.txt", "first\n");
     int result = system("./reverse test5.txt /invalidpath/output5.txt > temp2.txt 2>&1");
-    assert(result != 0); // Should fail
+    assert(result != 0); // Should not be 0
     
     FILE *fp = fopen("temp2.txt", "r");
-    assert(fp != NULL);
+    assert(fp != NULL); // Should not be NULL
     
     char buffer[256];
     fgets(buffer, sizeof(buffer), fp);
@@ -86,6 +89,7 @@ void deleteFile(const char *filename) {
 }
 
 void run_tests() {
+    test_noArguments();
     test_emptyFile();
     test_singleLine();
     test_missingFile();
