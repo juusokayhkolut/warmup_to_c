@@ -36,7 +36,6 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "usage: reverse <input> <output>\n");
         exit(1);
     }
-    
 
     // CHECK IF INPUT AND OUTPUT (NAME) IS THE SAME
     if (argc >= 3 && strcmp(argv[1], argv[2]) == 0) {
@@ -46,19 +45,19 @@ int main(int argc, char *argv[]) {
 
     FILE *input = fopen(argv[1], "r");
 
+    // OPEN INPUT FILE
+    if (!input) {
+        fprintf(stderr, "error: cannot open file '%s'.\n", argv[1]);
+        exit(1);
+    }
+
     // INITIAL CAPACITY, GROW AS NEEDED IF FILE IS VERY LARGE
     size_t capacity = 10;
     size_t count = 0;
     char **lines = malloc(capacity * sizeof(char *));
-    if (!lines) {
+    if (lines == NULL) {
         fprintf(stderr, "malloc failed\n");
         fclose(input);
-        exit(1);
-    }
-
-    // OPEN INPUT FILE
-    if (!input) {
-        fprintf(stderr, "error: cannot open file '%s'.\n", argv[1]);
         exit(1);
     }
 
@@ -66,12 +65,17 @@ int main(int argc, char *argv[]) {
     char *line;
     while ((line = readLine(input)) != NULL) {
         if (count >= capacity) {
-            capacity *= 2; // double the capacity
+            // INCREASE CAPACITY AS NEEDED
+            capacity *= 2;
             char **temp = realloc(lines, capacity * sizeof(char *));
             if (!temp) {
                 fprintf(stderr, "malloc failed\n");
+                
+                // CLOSE FILE AND FREE MEMORY
                 free(line);
-                for (size_t i = 0; i < count; i++) free(lines[i]);
+                for (size_t i = 0; i < count; i++) {
+                    free(lines[i]);
+                }
                 free(lines);
                 fclose(input);
                 exit(1);
@@ -80,6 +84,8 @@ int main(int argc, char *argv[]) {
         }
         lines[count++] = line;
     }
+
+    // CLOSE FILE
     fclose(input);
 
     // OPEN OUTPUT (IF ONE WAS GIVEN)
@@ -88,17 +94,18 @@ int main(int argc, char *argv[]) {
         output = fopen(argv[2], "w");
         if (!output) {
             fprintf(stderr, "error: cannot open file '%s'.\n", argv[2]);
-            fclose(input);
             exit(1);
         }
     }
 
     // WRITE OR PRINT LINES IN REVERSE
     for (int i = count - 1; i >= 0; i--) {
-        if (output) {
-            fprintf(output, "%s", lines[i]);
+        size_t len = strlen(lines[i]);
+        if (len > 0 && lines[i][len - 1] != '\n') {
+            // ADD NEW LINE IF MISSING
+            fprintf(output ? output : stdout, "%s\n", lines[i]);
         } else {
-            fprintf("%s\n", lines[i]);
+            fprintf(output ? output : stdout, "%s", lines[i]);
         }
     }
 
