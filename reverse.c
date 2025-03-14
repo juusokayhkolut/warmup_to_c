@@ -20,8 +20,7 @@ char *readLine(FILE *file) {
         free(line);
         return NULL;
     }
-    // REMOVE LINE IF IT EXISTS
-    line[strcspn(line, "\n")] = 0;
+    
     return line;
 }
 
