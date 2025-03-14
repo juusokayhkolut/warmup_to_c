@@ -20,7 +20,7 @@ char *readLine(FILE *file) {
         free(line);
         return NULL;
     }
-    
+
     return line;
 }
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
     // WRITE OR PRINT LINES IN REVERSE
     for (int i = count - 1; i >= 0; i--) {
         if (output) {
-            fprintf(output, "%s\n", lines[i]);
+            fprintf(output, "%s", lines[i]);
         } else {
             fprintf("%s\n", lines[i]);
         }
