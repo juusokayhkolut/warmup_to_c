@@ -1,27 +1,81 @@
+////////////////////////////////////////////////////////////////////
+// FILE WRITTEN BY JUUSO KÄYHKÖ (493675)                          //
+//                                                                //
+// AI TOOLS WERE USED FOR ALGORHITM GENERATION,                   //
+// BUT NOT FOR WRITING THE ACTUALY CODE.                          //
+////////////////////////////////////////////////////////////////////
+
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_LINES 1000
-#define MAX_LEN 100
+// READ FILE OF ANY LENGTH
+char *readLine(FILE *file) {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    read = getline(&line, &len, file);
+    if (read == -1) {
+        free(line);
+        return NULL;
+    }
+    // REMOVE LINE IF IT EXISTS
+    line[strcspn(line, "\n")] = 0;
+    return line;
+}
 
 int main(int argc, char *argv[]) {
-    // Check if at least one argument was given
+    // CHECK IF AT LEAST ONE ARGUMENT WAS GIVEN
     if (argc < 2) {
         printf("Please provide arguments for input file and optionally output file\n");
         return 1;
     }
 
-    char lines[MAX_LINES][MAX_LEN];
-    int count = 0;
+    // CHECK IF INPUT AND OUTPUT (NAME) IS THE SAME
+    if (argc >= 3 && strcmp(argv[1], argv[2]) == 0) {
+        printf("Input and output file must differ\n");
+        return 1;
+    }
 
-    // Open input file
     FILE *input = fopen(argv[1], "r");
+
+    // INITIAL CAPACITY, GROW AS NEEDED IF FILE IS VERY LARGE
+    size_t capacity = 10;
+    size_t count = 0;
+    char **lines = malloc(capacity * sizeof(char *));
+    if (!lines) {
+        printf("Memory allocation failed.\n");
+        fclose(input);
+        return 1;
+    }
+
+    // OPEN INFPUT FILE
     if (!input) {
         printf("Failed to open input file.\n");
         return 1;
     }
 
-    // If output file argument was given, open the file to write
+    // READ FROM INPUT FILE
+    char *line;
+    while ((line = readLine(input)) != NULL) {
+        if (count >= capacity) {
+            capacity *= 2; // double the capacity
+            char **temp = realloc(lines, capacity * sizeof(char *));
+            if (!temp) {
+                printf("Memory reallocation failed.\n");
+                free(line);
+                for (size_t i = 0; i < count; i++) free(lines[i]);
+                free(lines);
+                fclose(input);
+                return 1;
+            }
+            lines = temp;
+        }
+        lines[count++] = line;
+    }
+    fclose(input);
+
+    // OPEN OUTPUT (IF ONE WAS GIVEN)
     FILE *output = NULL;
     if (argc >= 3) {
         output = fopen(argv[2], "w");
@@ -32,14 +86,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Read from the input file and add it to lines
-    while (fgets(lines[count], MAX_LEN, input) && count < MAX_LINES) {
-        lines[count][strcspn(lines[count], "\n")] = 0;
-        count++;
-    }
-    fclose(input);
-
-    // Depending on if output file was given, write or print reversed list
+    // WRITE OR PRINT LINES IN REVERSE
     for (int i = count - 1; i >= 0; i--) {
         if (output) {
             fprintf(output, "%s\n", lines[i]);
@@ -48,8 +95,9 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Close output file if needed
+    // CLOSE FILE AND FREE MEMORY
     if (output) fclose(output);
+    free(lines);
 
     return 0;
 }
