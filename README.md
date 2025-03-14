@@ -42,7 +42,7 @@ Flags:
 - `make clean`: Removes files
 
 ## Running the program
-To turn the program, use
+To translate the program, use
 ```make all```
 to generate all necessary files. Then, run:
 ```./reverse <input> <output>```
