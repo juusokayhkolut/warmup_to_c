@@ -28,13 +28,13 @@ int main(int argc, char *argv[]) {
     // CHECK IF AT LEAST ONE ARGUMENT WAS GIVEN
     if (argc < 2) {
         printf("Please provide arguments for input file and optionally output file\n");
-        return 1;
+        exit(1);
     }
 
     // CHECK IF INPUT AND OUTPUT (NAME) IS THE SAME
     if (argc >= 3 && strcmp(argv[1], argv[2]) == 0) {
         printf("Input and output file must differ\n");
-        return 1;
+        exit(1);
     }
 
     FILE *input = fopen(argv[1], "r");
@@ -46,13 +46,13 @@ int main(int argc, char *argv[]) {
     if (!lines) {
         printf("Memory allocation failed.\n");
         fclose(input);
-        return 1;
+        exit(1);
     }
 
     // OPEN INPUT FILE
     if (!input) {
         printf("error: cannot open file '%s'.\n", argv[1]);
-        return 1;
+        exit(1);
     }
 
     // READ FROM INPUT FILE
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
                 for (size_t i = 0; i < count; i++) free(lines[i]);
                 free(lines);
                 fclose(input);
-                return 1;
+                exit(1);
             }
             lines = temp;
         }
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
         if (!output) {
             printf("Failed to open output file.\n");
             fclose(input);
-            return 1;
+            exit(1);
         }
     }
 
