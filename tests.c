@@ -97,11 +97,21 @@ void deleteFile(const char *filename) {
 }
 
 void run_tests() {
+    fprintf(stdout, "Running test_noArguments...\n");
     test_noArguments();
+    
+    fprintf(stdout, "Running test_emptyFile...\n");
     test_emptyFile();
+    
+    fprintf(stdout, "Running test_singleLine...\n");
     test_singleLine();
+    
+    fprintf(stdout, "Running test_missingFile...\n");
     test_missingFile();
+
+    fprintf(stdout, "Running test_invalidOutputFile...\n");
     test_invalidOutputFile();
+
     printf("All tests passed!\n");
 }
 
