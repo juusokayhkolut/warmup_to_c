@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////////////
+// FILE WRITTEN BY JUUSO KÄYHKÖ (493675)                          //
+//                                                                //
+// AI TOOLS WERE USED FOR FINDING TESTING OBJECTIVES,             //
+// BUT NOT FOR WRITING THE ACTUALY CODE.                          //
+// FILE: tests.c                                                  //
+////////////////////////////////////////////////////////////////////
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
