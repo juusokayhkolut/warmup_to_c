@@ -1,3 +1,7 @@
 *.txt
 !test_input.txt
 !very_long_test_input.txt
+
+# Ignore binary files
+*
+!*.*
