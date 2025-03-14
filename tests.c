@@ -50,7 +50,7 @@ void test_missingFile() {
     
     char buffer[256];
     fgets(buffer, sizeof(buffer), fp);
-    assert(strncmp(buffer, "Failed to open input file.", 26) == 0);
+    assert(strncmp(buffer, "error: cannot open file 'doesnotexist.txt'.\n'", 26) == 0);
     
     fclose(fp);
     deleteFile("temp.txt");
@@ -66,7 +66,7 @@ void test_invalidOutputFile() {
     
     char buffer[256];
     fgets(buffer, sizeof(buffer), fp);
-    assert(strncmp(buffer, "Failed to open output file.", 27) == 0);
+    assert(strncmp(buffer, "error: cannot open file '/invalidpath/output5.txt'.\n", 27) == 0);
     
     fclose(fp);
     deleteFile("test5.txt");
