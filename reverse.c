@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     // OPEN INPUT FILE
     if (!input) {
-        printf("Failed to open input file.\n");
+        printf("error: cannot open file '%s'.\n", argv[1]);
         return 1;
     }
 
